@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class StringReverse {
@@ -11,19 +13,21 @@ public class StringReverse {
 		File file = new File(args[0]);
 		BufferedReader buffer = new BufferedReader(new FileReader(file));
 		String line;
+		String[] wordsInLine = null;
+		String reverse = null;
 		while ((line = buffer.readLine()) != null) {
 			line = line.trim();
-			if(line.length()>0){
-				String[] nameSplit = line.split("\\s");
-				if(nameSplit.length == 2){
-					line = nameSplit[0];
-					nameSplit[0] = nameSplit[1];
-					nameSplit[1] = line;
-					System.out.println(nameSplit[0]+" "+nameSplit[1]);
+			wordsInLine = line.split("\\s");
+			for(int i = wordsInLine.length-1; i >= 0; i--){
+				if(i==wordsInLine.length-1){
+					reverse = wordsInLine[i];
+				}else{
+					reverse = reverse+" "+wordsInLine[i];
 				}
 			}
+			System.out.println(reverse);
+			reverse = null;
 		}
 		buffer.close();
 	}
-
 }
