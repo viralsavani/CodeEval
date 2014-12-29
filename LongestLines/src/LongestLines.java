@@ -1,24 +1,66 @@
-import java.util.Arrays;
-import java.util.Comparator;
+import java.io.*;
+import java.util.ArrayList;
+
+public class LongestLines {
+
+	public static void main(String[] args) throws IOException{
+
+		//Shortest Implementation
+		File file = new File(args[0]);
+		BufferedReader buffer = new BufferedReader(new FileReader(file));
+		String line;
+		ArrayList<String> input = new ArrayList<>();
+		int linesToPrint = Integer.parseInt(buffer.readLine().trim());
+		input.add(buffer.readLine().trim());
+		while ((line = buffer.readLine()) != null) {
+			line = line.trim();	
+			if(line.length() > input.get(0).length()){
+				for(int i = input.size(); i< 0; i--){
+					input.add(i, input.get(i-1));
+				}
+				input.add(0, line);
+			}else{
+				input.add(line);
+			}
+
+		}
+		for(int i = 0; i < linesToPrint; i++){
+			System.out.println(input.get(i));
+		}
 
 
-public class LongestLines implements Comparator<String>{
+		//		<<<<<<<<<<<<Same as above but some extra looping>>>>>>>>>>>>>
 
-	public static void main(String[] args){
+		//		File file = new File(args[0]);
+		//		BufferedReader buffer = new BufferedReader(new FileReader(file));
+		//		String line;
+		//		ArrayList<String> input = new ArrayList<>();
+		//		int linesToPrint = Integer.parseInt(buffer.readLine().trim());
+		//		input.add(buffer.readLine().trim());
+		//		while ((line = buffer.readLine()) != null) {
+		//			line = line.trim();	
+		//			input.add(line);
+		//		}
+		//		
+		//		for (String string : input) {
+		//			System.out.println(string);
+		//		}
+		//		
+		//		String temp = null;
+		//		for(int i = 0; i< input.size(); i++){
+		//			for(int j = 1; j< input.size()-1; j++){
+		//				if(input.get(j).length() > input.get(j-1).length()){
+		//					temp = input.get(j);
+		//					input.add(j, input.get(j-1));
+		//					input.add(j-1, temp);
+		//				}
+		//			}
+		//		}
+		//		for(int i = 0; i < linesToPrint; i++){
+		//			System.out.println(input.get(i));
+		//		}
+		//		
 
-		String[] input = {"2","Hello World","CodeEval","Quick Fox","A","San Francisco"};
-		System.out.println("Input: " + Arrays.toString(input));//before sorting by length
-		Arrays.sort(input, new LongestLines());
-		System.out.println("Array Sorted:" + Arrays.toString(input));
-	}
-
-	@Override
-	public int compare(String o1, String o2) {
-		if (o1.length() > o2.length())
-			return -1;
-		else if (o1.length() < o2.length())
-			return 1;
-		else return 0;
 	}
 }
 
