@@ -38,5 +38,6 @@ public class HappyNumber {
 				System.out.println(1);
 			}
 		}
+		buffer.close();
 	}
 }
