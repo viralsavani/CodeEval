@@ -1,81 +1,34 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 
 public class CycleDetection {
 
-	public static void main(String[] args) {
-		String line = "2 0 6 3 1 6 3 1 6 3 1";
-		String withoutSpace = "";
-		String[] splitted = line.split("\\s"); 
+	public static void main(String[] args) throws IOException {
 
-		for (String string : splitted) {
-			withoutSpace = withoutSpace + string;
-		}
-		String t ="", tc1 = "", tc2 = "";
-		String h = "";
-		int ti = 0 , hi = 0, tci1 = 0, tci2 = 0;
-		boolean flag = true;
-		while(flag){
-			t = splitted[ti];
-			h = splitted[hi];
-			System.out.println(line);
-			System.out.println("First \t"+splitted[ti]+"\t"+splitted[hi]+"\t"+ti+"\t"+hi);
-			if(ti == splitted.length-1){
-				//System.out.println("No LOOP First");
-				break;
-			}
-			if(hi<splitted.length - 2){
-				hi++;
-				h = splitted[hi];
-				//System.out.println("Second \t"+splitted[ti]+"\t"+splitted[hi]+"\t"+ti+"\t"+hi);
-				if(ti == splitted.length-1){
-					//System.out.println("No LOOP Second");
-					break;
-				}
-
-				hi++;
-				h = splitted[hi];
-
-				ti++;
-				t = splitted[ti];
-				//System.out.println("Third \t"+splitted[ti]+"\t"+splitted[hi]+"\t"+ti+"\t"+hi);
-
-				if(h.equals(t)){
-					
-					tci1 = 0;
-					tci2 = ti;
-					int tiTemp = ti+1;
-					
-					
-					//System.out.println("Inner Most\t"+tc1+"\t"+tc2+"\t"+ti);
-					while(tiTemp >= 0){
-						tc1 = splitted[tci1];
-						tc2 = splitted[tci2];
-						if(tc1.equals(tc2)){
-							System.out.print(tc1);
+		File file = new File(args[0]);
+		BufferedReader buffer = new BufferedReader(new FileReader(file));
+		String line;
+		while ((line = buffer.readLine()) != null) {
+			line = line.trim();
+			String[] splitted = line.split("\\s");
+			int i = 0;
+			boolean flag = true;
+			while(flag){
+				for(int j = i+1; j <splitted.length; j++){
+					if(splitted[i].equals(splitted[j])){
+						for(int k = i; k < j; k++){
+							System.out.print(splitted[k]+" ");
 						}
-						tci1++;
-						tci2++;
-						tiTemp--;
+						flag = false;
+						break;
 					}
-					System.out.println();
-					
-					
-					//System.out.println("loop Found "+"\t\t"+h+"\t\t"+t);
-					break;
 				}
-			}else{
-				if(splitted[splitted.length-2].equals(splitted[splitted.length-1])){
-					//System.out.println("loop Found Last Two"+splitted[splitted.length-2]);
-					System.out.println(splitted);
-					break;				
-				}else{
-					System.out.println("Noloop Found Final");
-					break;	
-				}
-				
+				i++;
 			}
-			System.out.println("--------------------------");
-			System.out.println("--------------------------");
-			
+			System.out.println();
 		}
 	}
 }
